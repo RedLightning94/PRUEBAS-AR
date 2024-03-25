@@ -19,7 +19,7 @@
                     <a-text value="Biological Danger" align="center" width="3" position="0 0 0.05" color="black"></a-text>
                     <a-entity position="0 -0.5 0.08">
                         <a-box id="details-box" width="1.5" height="0.5" depth="0.02" material="color: blue;"></a-box>
-                        <a-text id="details-button" value="Ver detalles" align="center" width="2" position="0 0 0.06" color="white" event-set__click="_event: click; detail: {clicked: true}"></a-text> 
+                        <a-text id="details-button" value="Ver detalles" align="center" width="2" position="0 0 0.06" color="white"></a-text> 
                     </a-entity>
                     <a-entity id="hide-details-entity" position="0 -0.5 0.08">
                     </a-entity>
@@ -30,21 +30,14 @@
     </div>
 
     <script>
-        // Cuando el botón es clickeado
-        AFRAME.registerComponent('event-set__click', {
-          schema: {
-            clicked: { default: false }
-          },
-          init: function () {
-            this.el.addEventListener(this.data.event, () => {
-              // Cuando el botón es clickeado, ajusta la zona clickable del cursor
-              const cursor = document.querySelector('a-cursor');
-              const el = document.querySelector('#details-button');
-              const rect = el.getBoundingClientRect();
-              cursor.setAttribute('raycaster', `objects: [details-listener]; far: 1000; direction: 0 0 -1; origin: ${rect.left + rect.width / 2} ${rect.top + rect.height / 2} -1`);
-            });
-          }
+        // Ajusta la zona clickeable del cursor cuando se toca el botón
+        document.getElementById('details-button').addEventListener('touchstart', function(event) {
+            var cursor = document.querySelector('a-cursor');
+            var button = document.getElementById('details-button');
+            var rect = button.getBoundingClientRect();
+            cursor.setAttribute('raycaster', 'objects: [details-listener]; far: 1000; direction: 0 0 -1; origin: ' + (rect.left + rect.width / 2) + ' ' + (rect.top + rect.height / 2) + ' -1');
         });
     </script>
 </body>
 </html>
+
