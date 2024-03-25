@@ -30,25 +30,21 @@
         </a-scene>
     </div>
     <script>
-        // Función para ajustar la zona clickeable del cursor basada en la posición del botón
-        function ajustarZonaClickable(event) {
-            var button = document.getElementById('details-button');
-            var cursor = document.querySelector('a-cursor');
-            var buttonPosition = button.getAttribute('position');
-            var buttonWidth = button.getAttribute('geometry').width;
-            var buttonHeight = button.getAttribute('geometry').height;
-
-            // Calcula las coordenadas del botón relativas a la ventana del navegador
-            var rect = button.getBoundingClientRect();
-            var buttonX = rect.left + buttonPosition.x;
-            var buttonY = rect.top + buttonPosition.y;
-
-            // Ajusta la zona clickeable del cursor para que coincida con la posición del botón
-            cursor.setAttribute('raycaster', 'objects: [details-listener]; far: ' + buttonWidth + '; direction: 0 0 -1; origin: ' + buttonX + ' ' + buttonY + ' -1');
-        }
-
-        // Agrega el evento 'click' al botón para ajustar la zona clickeable
-        document.getElementById('details-button').addEventListener('click', ajustarZonaClickable);
+        // Cuando el botón es clickeado
+        AFRAME.registerComponent('event-set__click', {
+          schema: {
+            clicked: { default: false }
+          },
+          init: function () {
+            this.el.addEventListener(this.data.event, () => {
+              // Cuando el botón es clickeado, ajusta la zona clickable del cursor
+              const cursor = document.querySelector('a-cursor');
+              const el = document.querySelector('#details-button');
+              const rect = el.getBoundingClientRect();
+              cursor.setAttribute('raycaster', `objects: [details-listener]; far: 1000; direction: 0 0 -1; origin: ${rect.left + rect.width / 2} ${rect.top + rect.height / 2} -1`);
+            });
+          }
+        });
     </script>
 </body>
 </html>
