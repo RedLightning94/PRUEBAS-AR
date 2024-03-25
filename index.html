@@ -6,7 +6,6 @@
     <title>AR Message</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="script.js" defer></script> 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,7 +19,7 @@
                     <a-text value="Biological Danger" align="center" width="3" position="0 0 0.05" color="black"></a-text>
                     <a-entity position="0 -0.5 0.08">
                         <a-box id="details-box" width="1.5" height="0.5" depth="0.02" material="color: blue;"></a-box>
-                        <a-text id="details-button" value="Ver detalles" align="center" width="2" position="0 0 0.06" color="white"></a-text> 
+                        <a-text id="details-button" value="Ver detalles" align="center" width="2" position="0 0 0.06" color="white" event-set__click="_event: click; detail: {clicked: true}"></a-text> 
                     </a-entity>
                     <a-entity id="hide-details-entity" position="0 -0.5 0.08">
                     </a-entity>
@@ -29,6 +28,7 @@
             <a-entity camera cursor="rayOrigin: mouse;" raycaster="objects: [details-listener]"></a-entity>
         </a-scene>
     </div>
+
     <script>
         // Cuando el botón es clickeado
         AFRAME.registerComponent('event-set__click', {
@@ -48,6 +48,3 @@
     </script>
 </body>
 </html>
-
-
-
